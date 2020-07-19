@@ -3,11 +3,12 @@ package com.elan.tugas4.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="user")
 @Access(value=AccessType.FIELD)
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,18 +24,14 @@ public class User {
 
     String email;
     boolean active;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
-
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-//@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 
 
     public User() {
     }
 
-    public User(int id, String username, String password, String name, String role, String email, boolean active) {
+    public User(int id, String username, String password, String name, String role, String email, boolean active, Address address) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -42,13 +39,6 @@ public class User {
         this.role = role;
         this.email = email;
         this.active = active;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -106,5 +96,13 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

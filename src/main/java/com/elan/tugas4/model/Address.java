@@ -3,6 +3,7 @@ package com.elan.tugas4.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="address")
@@ -15,7 +16,7 @@ public class Address {
     String address;
     String country;
     String province;
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
     @JsonIgnore
     private User user;
@@ -29,15 +30,16 @@ public class Address {
 //@JsonIgnore
 //    User user;
 
+
     public Address() {
     }
 
-    public Address(int id, String address, String country, String province) {
+    public Address(int id, String address, String country, String province, User user) {
         this.id = id;
         this.address = address;
         this.country = country;
         this.province = province;
-//        User_Id = user_Id;
+        this.user = user;
     }
 
     public int getId() {
@@ -72,11 +74,11 @@ public class Address {
         this.province = province;
     }
 
-//    public int getUser_Id() {
-//        return User_Id;
-//    }
-//
-//    public void setUser_Id(int user_Id) {
-//        User_Id = user_Id;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
