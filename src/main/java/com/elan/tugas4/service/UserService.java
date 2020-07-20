@@ -5,16 +5,29 @@ import com.elan.tugas4.model.User;
 import com.elan.tugas4.repository.AddressRepository;
 import com.elan.tugas4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class UserService {
     @Autowired
     UserRepository repo;
+
+    @Autowired
+    AddressRepository adrepo;
+
+    @Autowired
+    AddressService adservice;
 
     public boolean hapusUser(int id){
         User result = repo.findById(id);
@@ -29,6 +42,14 @@ public class UserService {
             return false;
         }
     }
+
+//    public List<User> getAllUser(Integer pageNo, String sortKey) {
+//        int noOfRecord = 3;
+//        Pageable page = PageRequest.of(pageNo, noOfRecord, Sort.by(sortKey));
+//        Page<User> result = repo.findAll(page);
+//        return result.getContent();
+//    }
+
 
     public boolean updateUser(User body){
         User result = repo.findById(body.getId());
@@ -49,15 +70,12 @@ public class UserService {
         return result;
     }
 
-    @Autowired
-    AddressRepository adrepo;
     public User saveBody(User user){
         User user1;
         Address address1 = user.getAddress();
         try {
-            user.setAddress(address1);
+            user.setAddress(null);
             user1 = repo.save(user);
-//            address1.setId(user1.getId());
             address1.setUser(user1);
             adrepo.save(address1);
             System.out.println("input berhasil" + address1);
@@ -69,5 +87,24 @@ public class UserService {
         }
 
     }
+
+    public List<Address> getAddress(String address) {
+        Sort sortKey = Sort.by("address");
+        return adrepo.findByAddress(address, sortKey);
+    }
+
+    public List<User> getAllUserByAddress(String search, String type) {
+        switch (type) {
+            case "city":
+                return repo.findByAddress_CityContaining(search);
+            case "province":
+                return repo.findByAddress_ProvinceContaining(search);
+            case "country":
+                return repo.findByAddress_CountryContaining(search);
+            default:
+                return null;
+        }
+    }
+
 
 }

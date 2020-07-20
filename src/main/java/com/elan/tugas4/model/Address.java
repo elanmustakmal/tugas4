@@ -3,7 +3,6 @@ package com.elan.tugas4.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name="address")
@@ -12,34 +11,44 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
-    String address;
-    String country;
-    String province;
+    private int id;
+    private String address;
+    private String country;
+    private String province;
+    private String city;
+    private int postalcode;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
     @JsonIgnore
     private User user;
-//    @JoinColumn(name = "user_id", referencedColumnName = "id")
-
-//    int User_Id;
-
-//    @OneToOne(mappedBy = "user")
-//@OneToOne(fetch = FetchType.LAZY, optional = false)
-//@JoinColumn(name = "user_id", nullable = false)
-//@JsonIgnore
-//    User user;
-
 
     public Address() {
     }
 
-    public Address(int id, String address, String country, String province, User user) {
+    public Address(int id, String address, String country, String province, String city, int postalcode, User user) {
         this.id = id;
         this.address = address;
         this.country = country;
         this.province = province;
+        this.city = city;
+        this.postalcode = postalcode;
         this.user = user;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getPostalcode() {
+        return postalcode;
+    }
+
+    public void setPostalcode(int postalcode) {
+        this.postalcode = postalcode;
     }
 
     public int getId() {
@@ -81,4 +90,17 @@ public class Address {
     public void setUser(User user) {
         this.user = user;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Address{" +
+//                "id=" + id +
+//                ", address='" + address + '\'' +
+//                ", country='" + country + '\'' +
+//                ", province='" + province + '\'' +
+//                ", city='" + city + '\'' +
+//                ", postalcode=" + postalcode +
+//                ", user=" + user +
+//                '}';
+//    }
 }

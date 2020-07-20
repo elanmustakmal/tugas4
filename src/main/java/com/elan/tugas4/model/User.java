@@ -12,17 +12,17 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
 
-    String username;
+    private String username;
     @JsonIgnore
-    String password;
+    private String password;
 
-    String name;
+    private String name;
 
-    String role;
+    private String role;
 
-    String email;
+    private String email;
     boolean active;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
@@ -104,5 +104,19 @@ public class User implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
+                ", active=" + active +
+                ", address=" + address +
+                '}';
     }
 }
