@@ -52,7 +52,6 @@ public class UserController {
         System.out.println("body : " + body.toString());
         Map<String, Object> result = new HashMap<>();
 
-
         if (service.updateUser(body)) {
             result.put("succes", true);
             result.put("message", "berhasil");
@@ -83,7 +82,7 @@ public class UserController {
             Page<User> pageuser;
             if (username == null) {
                 pageuser = repo.findAll(paging);
-            }  else {
+            } else {
                 pageuser = repo.findByUsernameContaining(username, paging);
             }
 
@@ -107,17 +106,6 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//
-//    @GetMapping("byAddress")
-//    public List<Address> getbyAddress(@PathVariable String address){
-//        return service.getAddress(address);
-//    }
-
-//    @GetMapping("page")
-//    public List<User> getAllUser(@RequestParam(defaultValue = "0") Integer page,
-//                                 @RequestParam(defaultValue = "address") String sortKey) {
-//        return service.getAllUser(page, sortKey);
-//    }
 
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     @GetMapping("byAddress")
@@ -134,9 +122,9 @@ public class UserController {
             Page<User> pageuser;
             if (search.isEmpty()) {
                 pageuser = repo.findAll(paging);
-            }  else {
+            } else {
                 Map<String, Object> result = new HashMap<>();
-                result.put("all user address" , service.getAllUserByAddress(search, type));
+                result.put("all user address", service.getAllUserByAddress(search, type));
 
                 return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -161,7 +149,9 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
+
 
 
 }

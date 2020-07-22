@@ -43,14 +43,6 @@ public class UserService {
         }
     }
 
-//    public List<User> getAllUser(Integer pageNo, String sortKey) {
-//        int noOfRecord = 3;
-//        Pageable page = PageRequest.of(pageNo, noOfRecord, Sort.by(sortKey));
-//        Page<User> result = repo.findAll(page);
-//        return result.getContent();
-//    }
-
-
     public boolean updateUser(User body){
         User result = repo.findById(body.getId());
         if (result != null) {
