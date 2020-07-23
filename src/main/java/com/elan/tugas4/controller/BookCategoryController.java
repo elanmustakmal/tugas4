@@ -1,5 +1,6 @@
 package com.elan.tugas4.controller;
 
+import com.elan.tugas4.model.Address;
 import com.elan.tugas4.model.Book;
 import com.elan.tugas4.model.BookCategory;
 import com.elan.tugas4.repository.BookCategoryRepository;
@@ -36,6 +37,21 @@ public class BookCategoryController {
     }
 
     @PostMapping("insert")
+//    Map insertBookCategory(@RequestBody BookCategory body){
+//        Map<String,Object> result = new HashMap<>();
+//        System.out.println("body " + body.toString());
+//        boolean status = service.addBookCategory(body);
+//        if (status){
+//            result.put("succes",true);
+//            result.put("message","berhasil");
+//        }else{
+//            result.put("success",false);
+//            result.put("message","gagal");
+//        }
+//
+//        return result;
+//    }
+
    public BookCategory insertBookCategory (@RequestBody BookCategory body) {
         BookCategory result = repo.save(body);
         return result;

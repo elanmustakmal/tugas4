@@ -1,10 +1,8 @@
 package com.elan.tugas4.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name="book")
@@ -26,11 +24,11 @@ public class Book {
     private String writer;
 
     private int year;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
 //    @MapsId
-    @JsonIgnore
-    @JoinColumn(name = "bookcategory", referencedColumnName = "id")
-private BookCategory bookcategory;
+//    @JsonIgnore
+    @JoinColumn(name = "bookCategory", referencedColumnName = "id")
+private BookCategory bookCategory;
 
     public Book() {
     }
@@ -42,7 +40,7 @@ private BookCategory bookcategory;
         this.title = title;
         this.writer = writer;
         this.year = year;
-        this.bookcategory = bookcategory;
+        this.bookCategory = bookcategory;
     }
 
     public int getId() {
@@ -93,11 +91,11 @@ private BookCategory bookcategory;
         this.year = year;
     }
 
-    public BookCategory getBookcategory() {
-        return bookcategory;
+    public BookCategory getBookCategory() {
+        return bookCategory;
     }
 
-    public void setBookcategory(BookCategory bookcategory) {
-        this.bookcategory = bookcategory;
+    public void setBookCategory(BookCategory bookCategory) {
+        this.bookCategory = bookCategory;
     }
 }

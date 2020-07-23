@@ -4,7 +4,6 @@ package com.elan.tugas4.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,14 +15,15 @@ public class BookCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
+    @Column(name = "name")
     private String name;
 
 @OneToMany(
-        mappedBy = "bookcategory",
+        mappedBy = "bookCategory",
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY
 )
+@JsonIgnore
 private Set<Book> book;
 
     public BookCategory() {
@@ -55,7 +55,8 @@ private Set<Book> book;
         return book;
     }
 
-    public void setBook(Set<Book> book) {
+    public Book setBook(Set<Book> book) {
         this.book = book;
+        return null;
     }
 }

@@ -45,7 +45,8 @@ public class BookController {
         if (service.saveBody(body)) {
             result.put("Success", true);
             result.put("message", "berhasil");
-        } else {
+        }
+        else {
             result.put("Gagal", false);
             result.put("message", "gagal");
         }
@@ -80,7 +81,6 @@ public class BookController {
     @GetMapping("byTitle")
     Book findByTitle(@RequestParam String title) {
         return service.findByTitle(title);
-
     }
 
     @GetMapping("byCategory")

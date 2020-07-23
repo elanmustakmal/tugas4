@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -51,6 +52,22 @@ public class BookCategoryService {
         }
     }
 
+    public boolean addBookCategory(BookCategory body) {
+        Book result;
+        result = repo.findById(body.getId());
+        Book book;
+//        System.out.println("result" + result.toString());
+        body.setBook(Collections.singleton(result));
+        try{
+            bcrepo.save(body);
+//            System.out.println("bisa" + result.toString());
+            return true;
+        } catch (Exception e ) {
+//            System.out.println("tidak bisa" + result.toString());
+            return false;
+        }
+
+    }
 //    public Book findByTitle(String title) {
 //        Book result = repo.findByTitle(title);
 //        return result;
@@ -74,7 +91,5 @@ public class BookCategoryService {
 //
 //    }
 
+    }
 
-
-
-}
